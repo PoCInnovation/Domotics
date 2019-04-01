@@ -4,7 +4,7 @@ import csv
 
 app = Flask(__name__)
 
-@app.route("/", methods=["POST", "GET"])
+@app.route("/", methods = ["POST", "GET"])
 def receiveUID():
         fname = "uid.csv"
         file = open(fname, "r")
