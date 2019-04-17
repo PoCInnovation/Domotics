@@ -1,29 +1,29 @@
 #include <HTTPClient.h>
-#include <MFRC522.h> //library responsible for communicating with the module RFID-RC522
-#include <SPI.h> //library responsible for communicating of SPI bus
+#include <MFRC522.h>                //library responsible for communicating with the module RFID-RC522
+#include <SPI.h>                    //library responsible for communicating of SPI bus
 #include <WiFi.h>
 
-#define SS_PIN    21
-#define RST_PIN   22
+#define SS_PIN          21
+#define RST_PIN         22
 #define SIZE_BUFFER     18
-#define MASTER_KEY "098A4A73"
 
-MFRC522::MIFARE_Key key; //used in authentication
-MFRC522::StatusCode status; //authentication return status code
-MFRC522 mfrc522(SS_PIN, RST_PIN); // Defined pins to module RC522
+MFRC522::MIFARE_Key key;            //used in authentication
+MFRC522::StatusCode status;         //authentication return status code
+MFRC522 mfrc522(SS_PIN, RST_PIN);   // Defined pins to module RC522
 
 int httpResponseCode;
-const char* ssid = "poc";
-const char* password = "pocpocpoc";
+const char* ssid        =           "poc";
+const char* password    =           "pocpocpoc";
+const char* MASTER_KEY  =           "098A4A73";
 
-void setup() 
+void setup()
 {
     pinMode(32, OUTPUT);
     pinMode(33, OUTPUT);
     pinMode(25, OUTPUT);
     pinMode(2, OUTPUT);
-    Serial.begin(9600); 
-    WiFi.begin(ssid, password); 
+    Serial.begin(9600);
+    WiFi.begin(ssid, password);
     SPI.begin();
     mfrc522.PCD_Init();
     Serial.println("initialised!");
@@ -47,31 +47,19 @@ void loop()
         digitalWrite(25, HIGH);
     } else {
         digitalWrite(25, LOW);
-        if (!mfrc522.PICC_IsNewCardPresent()) 
+        if (!mfrc522.PICC_IsNewCardPresent())
             return;
-        if (!mfrc522.PICC_ReadCardSerial()) 
+        if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
         http.begin("http://192.168.0.130:5000/");
-
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
         char buffer[mfrc522.uid.size];
         array_to_string(mfrc522.uid.uidByte, mfrc522.uid.size, buffer);
-
-        
-        Serial.print("\nthis key equals ");
-        Serial.print(buffer);
-        Serial.print("\nmaster key equals ");
-        Serial.print(MASTER_KEY);
-        Serial.print("\n\n");
-        
-        if (strcmp(buffer, "098A4A73") == 0) {
-            Serial.print("this is the master key\n");
+        if (strcmp(buffer, MASTER_KEY) == 0)
             getState(200);
-        } else
-          Serial.print("this is not the master key\n");
         if (httpResponseCode > 0){
             String response = http.getString();
             getState(httpResponseCode);
@@ -82,7 +70,7 @@ void loop()
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             mfrc522.uid.uidByte[a] = 0;
         http.end();
-    }    
+    }
 }
 
 void getState(int code)
@@ -91,7 +79,6 @@ void getState(int code)
     if (code == 200) {
         digitalWrite(32, HIGH);
         digitalWrite(2, HIGH);
-        Serial.println("open\n");
     } else if (code == 404) {
         digitalWrite(33, HIGH);
     }
@@ -100,4 +87,3 @@ void getState(int code)
     digitalWrite(32, LOW);
     digitalWrite(33, LOW);
 }
-
