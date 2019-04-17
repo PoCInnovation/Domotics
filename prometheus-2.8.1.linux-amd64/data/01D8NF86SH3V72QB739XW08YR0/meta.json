@@ -1,0 +1,18 @@
+{
+	"ulid": "01D8NF86SH3V72QB739XW08YR0",
+	"minTime": 1555488000000,
+	"maxTime": 1555495200000,
+	"stats": {
+		"numSamples": 16444,
+		"numSeries": 4,
+		"numChunks": 104,
+		"numBytes": 57049
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01D8NF86SH3V72QB739XW08YR0"
+		]
+	},
+	"version": 1
+}
