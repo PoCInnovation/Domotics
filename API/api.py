@@ -90,11 +90,11 @@ def add_user(data, username):
 @app.route("/", methods = ["POST", "GET"])
 def receiveUID():
         try:
-                data = request.get_data().hex()
-                if usr_already_exists(data) == True:
-                        add_history_line(data, get_user_by_id(data), "ACCES GRANTED")
+                uid = request.get_data().hex()
+                if usr_already_exists(uid) == True:
+                        add_history_line(uid, get_user_by_id(uid), "ACCES GRANTED")
                         return ("ACCES GRANTED", 200)
         except:
                 pass
-        add_history_line(data, "ERROR", "ACCES DENIED")
+        add_history_line(uid, "ERROR", "ACCES DENIED")
         return ("ACCES DENIED", 404)
