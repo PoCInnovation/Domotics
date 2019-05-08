@@ -62,7 +62,7 @@ void loop()
         if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
-        http.begin("http://192.168.0.130:5000/");
+        http.begin("http://192.168.0.134:5000/");
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
@@ -87,7 +87,7 @@ void getState(int code)
 {
     Serial.println(code);
     lcd.clear();
-    int timer = 60;
+    int timer = 60 * 60;
     if (code == 200) {
         digitalWrite(32, HIGH);
         digitalWrite(2, HIGH);

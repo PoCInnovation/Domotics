@@ -21,7 +21,7 @@ void setup()
     pinMode(32, OUTPUT);
     pinMode(33, OUTPUT);
     pinMode(25, OUTPUT);
-    pinMode(2, OUTPUT);
+    pinMode(26, OUTPUT);
     Serial.begin(9600);
     WiFi.begin(ssid, password);
     SPI.begin();
@@ -52,7 +52,7 @@ void loop()
         if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
-        http.begin("http://192.168.0.130:5000/");
+        http.begin("http://192.168.0.134:5000/");
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
@@ -78,7 +78,7 @@ void getState(int code)
     Serial.println(code);
     if (code == 200) {
         digitalWrite(32, HIGH);
-        digitalWrite(2, HIGH);
+        digitalWrite(26, HIGH);
     } else if (code == 404) {
         digitalWrite(33, HIGH);
     }
