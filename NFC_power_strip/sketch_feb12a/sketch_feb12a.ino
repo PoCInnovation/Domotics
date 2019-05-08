@@ -97,7 +97,10 @@ void getState(int code)
             lcd.setCursor(0, 0);
             lcd.print("Temps restant :");
             lcd.setCursor(0, 1);
-            lcd.print(timer);
+            lcd.print(timer / 60);
+            lcd.print("mn ");
+            lcd.print(timer % 60);
+            lcd.print("s");
             delay(1000);
         }
     } else if (code == 404) {
