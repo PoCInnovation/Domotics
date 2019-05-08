@@ -11,5 +11,5 @@ RUN pip3 --no-cache-dir install -r requierements.txt
 
 EXPOSE 5000
 
-ENTRYPOINT ["flask run"]
-CMD [""]
+ENTRYPOINT ["python3"]
+CMD ["api.py"]
