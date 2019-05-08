@@ -8,3 +8,8 @@ WORKDIR /app
 COPY . /app
 
 RUN pip3 --no-cache-dir install -r requierements.txt
+
+EXPOSE 5000
+
+ENTRYPOINT ["flask run"]
+CMD [""]
