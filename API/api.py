@@ -1,18 +1,14 @@
 #!/bin/python3
 from flask import *
-import csv, datetime, sys, pymysql
+import pymysql
 
 app = Flask(__name__)
-now = datetime.datetime.now()
 
 DATABASE_NAME = 'flask_api'
 DATABASE_HOST = 'localhost'
 DATABASE_SOCK =  None
 DATABASE_USER = 'root'
 DATABASE_PASS = ''
-
-def get_time():
-        return (str(now.year) + "-" + str(now.month) + "-" + str(now.day) + " " + str(now.hour) + ":" + str(now.minute) + ":" + str(now.second))
 
 def connect_to_sql():
     if DATABASE_SOCK != None:
@@ -26,6 +22,13 @@ def connect_to_sql():
                                   passwd = DATABASE_PASS,
                                   db     = DATABASE_NAME)
     return connect
+
+
+def get_request():
+    args = request.form
+    if request.headers['Content-Type'] == 'application/json':
+        args = request.get_json()
+    return args
 
 ##################################################################################################################################################
 
@@ -72,7 +75,7 @@ def add_history_line(data, username, is_granted):
 
 def add_user(data, username):
         if usr_already_exists(data) == True:
-                return
+                return "User already exists"
         try:
                 connect = connect_to_sql()
                 cursor = connect.cursor()
@@ -82,18 +85,49 @@ def add_user(data, username):
 
                 cursor.close()
                 connect.close()
+                return "User created"
         except:
               pass
 
-if __name__ == '__main__':
-        app.run(host="0.0.0.0")
+
+def remove_user(username):
+        try:
+                connect = connect_to_sql()
+                cursor = connect.cursor()
+                print(username)
+                cursor.execute("DELETE FROM user WHERE username = '%s'" % (username))
+                connect.commit()
+
+                cursor.close()
+                connect.close()
+                return "User deleted"
+        except:
+                return "User does not exist"
+
 
 ##################################################################################################################################################
+
+
+@app.route("/add_user", methods = ["POST"])
+def add_user_route():
+        my_request = get_request()
+        uid = my_request['uid']
+        username = my_request['username']
+        return (jsonify(add_user(uid, username)))
+
+
+@app.route("/remove_user", methods = ["POST"])
+def remove_user_route():
+        my_request = get_request()
+        username = my_request['username']
+        return (jsonify(remove_user(username)))
+
 
 @app.route("/", methods = ["POST", "GET"])
 def receiveUID():
         try:
                 uid = request.get_data().hex()
+                print(uid)
                 if usr_already_exists(uid) == True:
                         add_history_line(uid, get_user_by_id(uid), "ACCES GRANTED")
                         return ("ACCES GRANTED", 200)
@@ -101,3 +135,8 @@ def receiveUID():
                 pass
         add_history_line(uid, "ERROR", "ACCES DENIED")
         return ("ACCES DENIED", 404)
+
+
+
+if __name__ == '__main__':
+        app.run(host="0.0.0.0")
