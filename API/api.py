@@ -138,7 +138,7 @@ def remove_user_route():
 
 
 @app.route("/rename_user", methods = ["POST"])
-def remove_user_route():
+def rename_user_route():
         my_request = get_request()
         username = my_request['username']
         new_username = my_request['new_username']
