@@ -19,6 +19,7 @@ int httpResponseCode;
 const char* ssid        =           "poc";
 const char* password    =           "pocpocpoc";
 const char* MASTER_KEY  =           "098A4A73";
+const char* MASTER_KEY2 =           "96a431b8";
 
 void setup()
 {
@@ -50,7 +51,7 @@ void array_to_string(byte array[], unsigned int len, char buffer[])
 void loop()
 {
     lcd.setCursor(0, 0);
-    lcd.print("Scanner votre");
+    lcd.print("Scannez votre");
     lcd.setCursor(0, 1);
     lcd.print("Carte POC <3");
     if (WiFi.status() != WL_CONNECTED) {
@@ -62,13 +63,13 @@ void loop()
         if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
-        http.begin("http://192.168.0.134:5000/");
+        http.begin("http://192.168.15.138:5000/");
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
         char buffer[mfrc522.uid.size];
         array_to_string(mfrc522.uid.uidByte, mfrc522.uid.size, buffer);
-        if (strcmp(buffer, MASTER_KEY) == 0)
+        if (strcmp(buffer, MASTER_KEY) == 0 || strcmp(buffer, MASTER_KEY2) == 0)
             getState(200);
         if (httpResponseCode > 0){
             String response = http.getString();
