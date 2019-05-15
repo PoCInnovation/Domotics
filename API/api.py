@@ -105,6 +105,20 @@ def remove_user(username):
                 return "User does not exist"
 
 
+def rename_user(username, new_username):
+        try:
+                connect = connect_to_sql()
+                cursor = connect.cursor()
+                cursor.execute("UPDATE user SET username = '%s' WHERE username = '%s'" % (new_username, username))
+                connect.commit()
+
+                cursor.close()
+                connect.close()
+                return "Username updated"
+        except:
+                return "User does not exist"
+
+
 ##################################################################################################################################################
 
 
@@ -121,6 +135,14 @@ def remove_user_route():
         my_request = get_request()
         username = my_request['username']
         return (jsonify(remove_user(username)))
+
+
+@app.route("/rename_user", methods = ["POST"])
+def remove_user_route():
+        my_request = get_request()
+        username = my_request['username']
+        new_username = my_request['new_username']
+        return (jsonify(rename_user(username, new_username)))
 
 
 @app.route("/", methods = ["POST", "GET"])
