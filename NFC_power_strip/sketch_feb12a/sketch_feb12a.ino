@@ -37,9 +37,14 @@ void setup()
     WiFi.begin(ssid, password);
     SPI.begin();
     mfrc522.PCD_Init();
+    Serial.println("");
     Serial.println("initialised!");
     lcd.begin(16, 2); // Print a message to the LCD.
     lcd.display();
+    Serial.println("");
+    Serial.println("WiFi connected");
+    Serial.println("IP address: ");
+    Serial.println(WiFi.localIP());
 }
 
 void array_to_string(byte array[], unsigned int len, char buffer[])
