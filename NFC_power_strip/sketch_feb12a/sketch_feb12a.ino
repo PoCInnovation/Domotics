@@ -18,8 +18,14 @@ LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 int httpResponseCode;
 const char* ssid        =           "poc";
 const char* password    =           "pocpocpoc";
-const char* MASTER_KEY  =           "098A4A73";
-const char* MASTER_KEY2 =           "96a431b8";
+
+const char* MASTER_KEY1 =           "098A4A73"; // zap
+const char* MASTER_KEY2 =           "96a431b8"; // jessy
+const char* MASTER_KEY3 =           "042b8c329e5b80"; //
+const char* MASTER_KEY4 =           "043c1c2a9e5b80"; //
+const char* MASTER_KEY5 =           "045e572a9e5b80"; //
+const char* MASTER_KEY6 =           "047e272a9e5b80"; //
+const char* MASTER_KEY7 =           "04571f2a9e5b80"; //
 
 void setup()
 {
@@ -69,7 +75,10 @@ void loop()
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
         char buffer[mfrc522.uid.size];
         array_to_string(mfrc522.uid.uidByte, mfrc522.uid.size, buffer);
-        if (strcmp(buffer, MASTER_KEY) == 0 || strcmp(buffer, MASTER_KEY2) == 0)
+        if (strcmp(buffer, MASTER_KEY1) == 0 || strcmp(buffer, MASTER_KEY2) == 0
+        || strcmp(buffer, MASTER_KEY3) == 0 || strcmp(buffer, MASTER_KEY4) == 0
+        || strcmp(buffer, MASTER_KEY5) == 0 || strcmp(buffer, MASTER_KEY6) == 0
+        || strcmp(buffer, MASTER_KEY7) == 0)
             getState(200);
         if (httpResponseCode > 0){
             String response = http.getString();
