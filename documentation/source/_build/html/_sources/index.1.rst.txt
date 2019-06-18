@@ -1,0 +1,29 @@
+Welcome to DOMOTICS's documentation!
+====================================
+
+
+
+test
+====
+
+insert code.::
+
+    print 'hello wolrd'
+    >> hello wolrd
+
+
+Guide
+^^^^^
+
+.. toctree::
+   :maxdepth: 2
+
+   API
+
+
+Guide des différentes itérations
+================================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
