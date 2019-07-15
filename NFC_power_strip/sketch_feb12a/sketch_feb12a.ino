@@ -20,12 +20,12 @@ const char* ssid        =           "WIFI_DOMOTICS";
 const char* password    =           "pocpocpoc";
 
 const char* MASTER_KEY1 =           "098A4A73"; // zap
-const char* MASTER_KEY2 =           "96a431b8"; // jessy
-const char* MASTER_KEY3 =           "042b8c329e5b80"; //
-const char* MASTER_KEY4 =           "043c1c2a9e5b80"; //
-const char* MASTER_KEY5 =           "045e572a9e5b80"; //
-const char* MASTER_KEY6 =           "047e272a9e5b80"; //
-const char* MASTER_KEY7 =           "04571f2a9e5b80"; //
+const char* MASTER_KEY2 =           "961431B8"; // jessy
+const char* MASTER_KEY3 =           "042B8C329E5B80"; //
+const char* MASTER_KEY4 =           "043C1C2A9E5B80"; //
+const char* MASTER_KEY5 =           "045E572A9E5B80"; //
+const char* MASTER_KEY6 =           "047E272A9E5B80"; //
+const char* MASTER_KEY7 =           "04571F2A9E5B80"; //
 
 void setup()
 {
