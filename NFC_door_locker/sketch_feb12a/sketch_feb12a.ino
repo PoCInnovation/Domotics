@@ -12,7 +12,7 @@ MFRC522::StatusCode status;         //authentication return status code
 MFRC522 mfrc522(SS_PIN, RST_PIN);   // Defined pins to module RC522
 
 int httpResponseCode;
-const char* ssid        =           "poc";
+const char* ssid        =           "WIFI_DOMOTICS";
 const char* password    =           "pocpocpoc";
 const char* MASTER_KEY  =           "098A4A73";
 const char* MASTER_KEY2 =           "96a431b8";
@@ -53,7 +53,7 @@ void loop()
         if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
-        http.begin("http://192.168.15.138:5000/");
+        http.begin("http://192.168.15.138:9000/");
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
