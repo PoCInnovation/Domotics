@@ -15,7 +15,7 @@ int httpResponseCode;
 const char* ssid        =           "WIFI_DOMOTICS";
 const char* password    =           "pocpocpoc";
 const char* MASTER_KEY  =           "098A4A73";
-const char* MASTER_KEY2 =           "96a431b8";
+const char* MASTER_KEY2 =           "96A431B8";
 
 void setup()
 {
