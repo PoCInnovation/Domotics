@@ -14,8 +14,9 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);   // Defined pins to module RC522
 int httpResponseCode;
 const char* ssid        =           "WIFI_DOMOTICS";
 const char* password    =           "pocpocpoc";
-const char* MASTER_KEY  =           "098A4A73";
-const char* MASTER_KEY2 =           "96A431B8";
+
+const char* MASTER_KEY1 =           "098A4A73"; // zap
+const char* MASTER_KEY2 =           "96A431B8"; // jessy
 
 void setup()
 {
@@ -23,6 +24,8 @@ void setup()
     pinMode(33, OUTPUT);
     pinMode(25, OUTPUT);
     pinMode(26, OUTPUT);
+    ledcSetup(0,12000,8);
+    ledcAttachPin(27,0);
     Serial.begin(9600);
     WiFi.begin(ssid, password);
     SPI.begin();
@@ -47,20 +50,24 @@ void loop()
     if (WiFi.status() != WL_CONNECTED) {
         digitalWrite(25, HIGH);
     } else {
+        digitalWrite(26, HIGH);
         digitalWrite(25, LOW);
         if (!mfrc522.PICC_IsNewCardPresent())
             return;
         if (!mfrc522.PICC_ReadCardSerial())
             return;
         HTTPClient http;
-        http.begin("http://192.168.15.138:9000/");
+        http.begin("http://192.168.15.154:9000/");
         for (int a = 0; a <= mfrc522.uid.size; a += 1)
             Serial.print(mfrc522.uid.uidByte[a]);
         httpResponseCode = http.POST((char *) mfrc522.uid.uidByte);
         char buffer[mfrc522.uid.size];
         array_to_string(mfrc522.uid.uidByte, mfrc522.uid.size, buffer);
-        if (strcmp(buffer, MASTER_KEY) == 0 || strcmp(buffer, MASTER_KEY2) == 0)
+        Serial.println(buffer);
+        if (strcmp(buffer, MASTER_KEY1) == 0 || strcmp(buffer, MASTER_KEY2) == 0){
             getState(200);
+            Serial.println("Master Key scanned");
+        }
         if (httpResponseCode > 0){
             String response = http.getString();
             getState(httpResponseCode);
@@ -79,12 +86,15 @@ void getState(int code)
     Serial.println(code);
     if (code == 200) {
         digitalWrite(32, HIGH);
-        digitalWrite(26, HIGH);
+        digitalWrite(26, LOW);
+        ledcWriteTone(0,1500);
     } else if (code == 404) {
         digitalWrite(33, HIGH);
+        ledcWriteTone(0,500);
     }
     delay(1000);
     digitalWrite(26, LOW);
+    ledcWriteTone(0,0);
     digitalWrite(32, LOW);
     digitalWrite(33, LOW);
 }
