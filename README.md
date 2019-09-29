@@ -12,7 +12,7 @@ Many services are running on the RaspberryPi and the Domotics VM on the server
 | Service             | Adress to acces it                                                           |
 |---------------------|------------------------------------------------------------------------------|
 | Documentation       | [raspberrypi_ip_adress:1234](raspberrypi_ip_adress:1234)                     |
-| Graphana            | [raspberrypi_ip_adress:3000/graphana](raspberrypi_ip_adress:3000/graphana)   |
+| Grafana            | [raspberrypi_ip_adress:3000/Grafana](raspberrypi_ip_adress:3000/Grafana)   |
 | OctoPrint Ultimaker | [raspberrypi_ip_adress:1234/profile_1](raspberrypi_ip_adress:1234/profile_1) |
 | OctoPrint 1         | [raspberrypi_ip_adress:1234/profile_2](raspberrypi_ip_adress:1234/profile_2) |
 | OctoPrint 2         | [raspberrypi_ip_adress:1234/profile_3](raspberrypi_ip_adress:1234/profile_3) |
@@ -31,19 +31,19 @@ A dockerfile was provided to dockerise it if wanted
 
 A documentation was written using Sphinx and rst files. To change it:
 1. Create a Python virtualenv
-1. install the packages in the [`documentation/requirement.txt`](/documentation/source)  and edit rts files in [`documentation/source`](/documentation/source)  
-2. Once it's done, run `make html` in the root of the documentation's folder. It will regenerate html files from the rts files  
+1. install the packages in the [`documentation/requirement.txt`](/documentation/source)  and edit rst files in [`documentation/source`](/documentation/source)  
+2. Once it's done, run `make html` in the root of the documentation's folder. It will regenerate html files from the rst files  
 3. After that, you can launch the script [`documentation/launch_server.sh`](./documentation/launch_server.sh), a python simpleHttp server will host the html files on the post 1234  
 A service must be assigned to it to run at startup  
 
 
-A version of the documentation is also available on the wiki of the repo  
+**A version of the documentation is also available on the wiki of the repo**  
 
 
-### Graphana
+### Grafana
 
-The graphana folder contains the configuration of the printers. It's a save if the profile created to monitor printers.
-Visit the graphana page on the PoC wifi to change the profile  
+The Grafana folder contains the configuration of the printers. It's a save if the profile created to monitor printers.
+Visit the Grafana page on the PoC wifi to change the profile  
 
 ### NFC folders
 
@@ -53,4 +53,4 @@ To transfer code on an ESP32, you need to install required libraries and set the
 
 ### Prometheus
 
-Prometheus server is used to query data from the printer, which will then be interpreted in graphana. A service must be created in order to launch one instance of prometheus per printer
+Prometheus server is used to query data from the printer, which will then be interpreted in Grafana. A service must be created in order to launch one instance of prometheus per printer
