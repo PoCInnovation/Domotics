@@ -1,2 +1,4 @@
 .vscode
 doc/
+__pycache__
+pip-selfcheck.json
