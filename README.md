@@ -9,13 +9,13 @@ Many services are running on the RaspberryPi and the Domotics VM on the server
 
 ## How to acces Domotics's services
 
-| Service             | Adress to acces it                                                           |
-|---------------------|------------------------------------------------------------------------------|
-| Documentation       | [raspberrypi_ip_adress:1234](raspberrypi_ip_adress:1234)                     |
-| Grafana            | [raspberrypi_ip_adress:3000/Grafana](raspberrypi_ip_adress:3000/Grafana)   |
-| OctoPrint Ultimaker | [raspberrypi_ip_adress:1234/profile_1](raspberrypi_ip_adress:1234/profile_1) |
-| OctoPrint 1         | [raspberrypi_ip_adress:1234/profile_2](raspberrypi_ip_adress:1234/profile_2) |
-| OctoPrint 2         | [raspberrypi_ip_adress:1234/profile_3](raspberrypi_ip_adress:1234/profile_3) |
+| Service                 | Adress to acces it                                                           |
+|-------------------------|------------------------------------------------------------------------------|
+| Documentation           | [http://192.168.15.154:1234/](http://192.168.15.154:1234/)                     |
+| Grafana                 | [http://192.168.15.138:3000/](http://192.168.15.138:3000/)                     |
+| OctoPrint Ultimaker     | [http://192.168.15.154/UM2/](http://192.168.15.154/UM2/)                       |
+| OctoPrint AlphaWise 1   | [http://192.168.15.154/AW1/](http://192.168.15.154/AW1/)                       |
+| OctoPrint AlphaWise 2   | [http://192.168.15.154/AW2/](http://192.168.15.154/AW2/)                       |
 
 
 ## How to use Domotics's services
